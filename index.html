@@ -3,129 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protein IDE Interface</title>
+    <title>Protein Engineering IDE</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Optional: Add custom scrollbar styling for a more integrated look */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'app-dark': '#0f0f0f',
+                        'app-dark-secondary': '#1a1a1a',
+                        'app-dark-tertiary': '#242424',
+                        'app-border': '#333333',
+                        'app-text-primary': '#f3f4f6',
+                        'app-text-secondary': '#9ca3af',
+                        'app-accent': '#3b82f6',
+                    },
+                    boxShadow: {
+                        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
         }
-        ::-webkit-scrollbar-track {
-            background: #1f2937; /* gray-800 */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4b5563; /* gray-600 */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* gray-500 */
-        }
-        /* Basic glassmorphism hint - apply to panels if needed */
-        .glass-effect {
-             background-color: rgba(31, 41, 55, 0.6); /* bg-gray-800 with opacity */
-             backdrop-filter: blur(10px);
-             -webkit-backdrop-filter: blur(10px); /* Safari */
-             /* border: 1px solid rgba(255, 255, 255, 0.1); */ /* Optional subtle border */
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-effect {
+                background: rgba(30, 30, 30, 0.7);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200 font-sans h-screen overflow-hidden">
-
-    <div class="flex flex-col md:flex-row h-full p-3 gap-3">
-
-        <aside id="left-panel" class="w-full md:w-1/2 h-1/3 md:h-full flex flex-col bg-gray-800 rounded-xl shadow-lg p-1 overflow-hidden">
-            <div class="p-3 border-b border-gray-700 text-sm font-semibold text-gray-400">
-                TOOLS / EDITOR
+<body class="bg-app-dark text-app-text-primary h-screen overflow-hidden">
+    <!-- Main Container -->
+    <div class="flex flex-col h-screen">
+        <!-- Header/Navigation Bar -->
+        <header class="glass-effect border-b border-app-border h-12 px-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-lg font-semibold">ProteinIDE</h1>
+                <nav class="hidden md:flex space-x-4">
+                    <button class="px-3 py-1 rounded-md hover:bg-app-dark-tertiary transition">File</button>
+                    <button class="px-3 py-1 rounded-md hover:bg-app-dark-tertiary transition">Edit</button>
+                    <button class="px-3 py-1 rounded-md hover:bg-app-dark-tertiary transition">View</button>
+                    <button class="px-3 py-1 rounded-md hover:bg-app-dark-tertiary transition">Tools</button>
+                    <button class="px-3 py-1 rounded-md hover:bg-app-dark-tertiary transition">Help</button>
+                </nav>
             </div>
-            <div class="flex-grow p-4 overflow-y-auto">
-                <h2 class="text-lg font-medium mb-4">Sequence Editor / Tools</h2>
-                <p class="text-sm text-gray-400">Your sequence editor, analysis tools, file browser, etc., will go here.</p>
-                <div class="mt-4 space-y-2">
-                    <div class="bg-gray-700 p-3 rounded-lg text-xs">Tool Item 1</div>
-                    <div class="bg-gray-700 p-3 rounded-lg text-xs">Tool Item 2</div>
-                    <div class="bg-gray-700 p-3 rounded-lg text-xs h-40">Sequence Input Area...</div>
+            <div class="flex items-center space-x-2">
+                <button class="p-1.5 rounded-full hover:bg-app-dark-tertiary transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center">
+                    <span class="text-sm font-medium">PE</span>
                 </div>
             </div>
-             <div class="p-2 border-t border-gray-700 text-xs text-gray-500">
-                Status bar or controls
-            </div>
-        </aside>
+        </header>
 
-        <div class="w-full md:w-1/2 h-2/3 md:h-full flex flex-col gap-3">
-
-            <section id="viewer-panel" class="h-1/2 flex flex-col bg-gray-800 rounded-xl shadow-lg p-1 overflow-hidden">
-                 <div class="p-3 border-b border-gray-700 text-sm font-semibold text-gray-400">
-                    PROTEIN VISUALIZER
-                </div>
-                 <div class="flex-grow p-4 flex items-center justify-center bg-gray-800/50">
-                    <div class="text-center text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        Protein Structure Viewer Area
-                    </div>
-                 </div>
-                 <div class="p-2 border-t border-gray-700 text-xs text-gray-500 flex justify-between">
-                     <span>Controls (Zoom, Rotate)</span>
-                     <span>Molecule Info</span>
-                 </div>
-            </section>
-
-            <section id="chat-panel" class="h-1/2 flex flex-col bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-                <div class="p-3 border-b border-gray-700 text-sm font-semibold text-gray-400 flex justify-between items-center">
-                    <span>AI Assistant / Chat</span>
-                    <button class="text-gray-500 hover:text-gray-300 text-xs">New Chat</button>
-                </div>
-                <div class="flex-grow p-4 space-y-4 overflow-y-auto">
-                    <div class="flex">
-                        <div class="bg-indigo-600/80 text-white p-3 rounded-lg max-w-xs text-sm">
-                            Welcome! How can I assist with your protein design?
-                        </div>
-                    </div>
-                     <div class="flex justify-end">
-                        <div class="bg-gray-600/80 text-gray-200 p-3 rounded-lg max-w-xs text-sm">
-                            Can you suggest mutations to increase stability?
-                        </div>
-                    </div>
-                     <div class="flex">
-                        <div class="bg-indigo-600/80 text-white p-3 rounded-lg max-w-xs text-sm">
-                            Sure, based on the current structure, consider mutating Leucine at position 85 to Proline...
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3 border-t border-gray-700">
-                    <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
-                        <textarea rows="1" class="flex-grow bg-transparent text-sm text-gray-200 placeholder-gray-500 focus:outline-none resize-none" placeholder="Ask about the protein..."></textarea>
-                        <button class="ml-2 text-indigo-400 hover:text-indigo-300 disabled:text-gray-600" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+        <!-- Main Content Area -->
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Left Panel - Tools/Utilities -->
+            <div class="w-1/4 border-r border-app-border flex flex-col" id="leftPanel">
+                <!-- Sidebar Navigation -->
+                <div class="h-full flex">
+                    <!-- Sidebar Icons -->
+                    <div class="w-12 bg-app-dark-secondary border-r border-app-border flex flex-col items-center py-4 space-y-6">
+                        <button class="p-2 rounded-md bg-app-dark-tertiary">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </button>
+                        <button class="p-2 rounded-md hover:bg-app-dark-tertiary transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                            </svg>
+                        </button>
+                        <button class="p-2 rounded-md hover:bg-app-dark-tertiary transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                        <button class="p-2 rounded-md hover:bg-app-dark-tertiary transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                         </button>
                     </div>
+                    
+                    <!-- Sidebar Content -->
+                    <div class="flex-1 overflow-y-auto scrollbar-hide">
+                        <!-- File Explorer Header -->
+                        <div class="p-3 border-b border-app-border flex items-center justify-between">
+                            <h2 class="text-sm font-medium uppercase">Sequence Explorer</h2>
+                            <button class="p-1 rounded-md hover:bg-app-dark-tertiary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- File Tree -->
+                        <div class="p-2">
+                            <div class="pb-1">
+                                <div class="flex items-center py-1 px-2 rounded hover:bg-app-dark-tertiary cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                    <span class="text-sm">Project Sequences</span>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="flex items-center py-1 px-2 rounded bg-app-dark-tertiary cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span class="text-sm text-indigo-400">sequence1.fasta</span>
+                                    </div>
+                                    <div class="flex items-center py-1 px-2 rounded hover:bg-app-dark-tertiary cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-app-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span class="text-sm">structure1.pdb</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pb-1 mt-2">
+                                <div class="flex items-center py-1 px-2 rounded hover:bg-app-dark-tertiary cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                    <span class="text-sm">Analysis Tools</span>
+                                </div>
+                            </div>
+                            
+                            <div class="pb-1 mt-2">
+                                <div class="flex items-center py-1 px-2 rounded hover:bg-app-dark-tertiary cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                    <span class="text-sm">Prediction Modules</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sequence Editor -->
+                        <div class="p-3 border-t border-app-border mt-3">
+                            <h3 class="text-sm font-medium uppercase mb-3">Sequence Editor</h3>
+                            <div class="glass-effect rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                                <div class="text-green-400">; FASTA format protein sequence</div>
+                                <div class="text-blue-400">&gt;sp|P01308|INS_HUMAN Insulin OS=Homo sapiens</div>
+                                <div class="break-all">MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
 
+            <!-- Right Panels Container -->
+            <div class="flex-1 flex flex-col" id="rightPanels">
+                <!-- Top Right - Protein Viewer -->
+                <div class="flex-1 border-b border-app-border p-4" id="viewerPanel">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-sm font-medium uppercase">Protein Structure Viewer</h2>
+                        <div class="flex items-center space-x-2">
+                            <button class="p-1 rounded-md hover:bg-app-dark-tertiary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                            <button class="p-1 rounded-md hover:bg-app-dark-tertiary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="h-full rounded-lg glass-effect overflow-hidden flex items-center justify-center">
+                        <!-- Placeholder for 3D Protein Viewer -->
+                        <div class="relative w-full h-full bg-gradient-to-br from-app-dark-tertiary to-app-dark">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-app-text-secondary opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+                                    </svg>
+                                    <p class="mt-2 text-app-text-secondary">3D Protein Structure Visualization</p>
+                                    <button class="mt-4 px-4 py-2 bg-app-accent rounded-md hover:bg-opacity-90 transition">
+                                        Load Structure
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Right - Chat Interface -->
+                <div class="h-2/5 flex flex-col" id="chatPanel">
+                    <div class="p-3 border-b border-app-border flex items-center justify-between">
+                        <h2 class="text-sm font-medium uppercase">Research Assistant</h2>
+                        <div class="flex items-center space-x-2">
+                            <button class="p-1 rounded-md hover:bg-app-dark-tertiary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                                </svg>
+                            </button>
+                            <button class="p-1 rounded-md hover:bg-app-dark-tertiary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages Area -->
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                        <!-- AI Message -->
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-indigo-600 flex-shrink-0 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3 p-3 bg-app-dark-tertiary rounded-lg rounded-tl-none max-w-[85%]">
+                                <p class="text-sm">I've analyzed the insulin sequence you're working with. The structure shows a typical pattern with two chains connected by disulfide bonds. Would you like me to highlight potential modification sites that might enhance its stability?</p>
+                            </div>
+                        </div>
+                        
+                        <!-- User Message -->
+                        <div class="flex items-start justify-end">
+                            <div class="mr-3 p-3 bg-app-accent bg-opacity-20 border border-app-accent border-opacity-30 rounded-lg rounded-tr-none max-w-[85%]">
+                                <p class="text-sm">Yes, please highlight the potential sites. I'm particularly interested in extending the half-life without affecting the receptor binding.</p>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-indigo-400 flex-shrink-0 flex items-center justify-center">
+                                <span class="text-xs font-medium">PE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="p-3 border-t border-app-border">
+                        <div class="relative">
+                            <input type="text" placeholder="Ask about your protein or analysis..." class="w-full p-3 pr-20 bg-app-dark-tertiary rounded-lg focus:outline-none focus:ring-1 focus:ring-app-accent" />
+                            <button class="absolute right-1 top-1/2 transform -translate-y-1/2 p-2 bg-app-accent rounded-md hover:bg-opacity-90 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
+        
+        <!-- Status Bar -->
+        <footer class="h-6 bg-app-dark-secondary border-t border-app-border flex items-center justify-between px-4 text-xs text-app-text-secondary">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span>Connected</span>
+                </div>
+                <span>Insulin (Homo sapiens)</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span>PyMOL View Active</span>
+                <span>Fold Prediction: 98% Confidence</span>
+            </div>
+        </footer>
     </div>
-
-    <script>
-        // Basic script to make textarea auto-resize (optional)
-        const textarea = document.querySelector('textarea');
-        textarea.addEventListener('input', autoResize, false);
-
-        function autoResize() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-            // Enable/disable send button based on content
-            const sendButton = this.nextElementSibling;
-            sendButton.disabled = !this.value.trim();
-        }
-        // Trigger resize on load in case there's initial content
-        // textarea.dispatchEvent(new Event('input'));
-    </script>
 </body>
 </html>
