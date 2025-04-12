@@ -1,80 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sequence Studio</title>
-  <!-- Tailwind CSS via CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protein Folding IDE</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Global styles */
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    /* Soft, rounded hero background */
-    .hero {
-      background: linear-gradient(135deg, #111, #222);
-    }
-  </style>
 </head>
-<body class="antialiased">
-  <!-- Header -->
-  <header class="py-6">
-    <div class="container mx-auto flex justify-between items-center px-4">
-      <div class="text-3xl font-bold bg-gray-900 px-4 py-2 rounded-full">
-        Sequence Studio
+<body class="bg-black text-white font-sans">
+  <!-- Main container split horizontally into two halves -->
+  <div class="flex h-screen">
+    <!-- Left half: Other functions panel -->
+    <div class="w-1/2 p-4">
+      <div class="h-full bg-gray-900 rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Functions</h2>
+        <!-- Insert additional UI elements and functions here -->
+        <p>Control elements, workflow tools, and project settings can go here.</p>
       </div>
-      <nav>
-        <ul class="flex space-x-6">
-          <li><a href="#" class="hover:text-gray-400 rounded-full px-3 py-1 transition-all">Home</a></li>
-          <li><a href="#" class="hover:text-gray-400 rounded-full px-3 py-1 transition-all">Features</a></li>
-          <li><a href="#" class="hover:text-gray-400 rounded-full px-3 py-1 transition-all">About</a></li>
-          <li><a href="#" class="hover:text-gray-400 rounded-full px-3 py-1 transition-all">Contact</a></li>
-        </ul>
-      </nav>
     </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero py-20">
-    <div class="container mx-auto text-center px-4">
-      <h1 class="text-5xl md:text-6xl font-extrabold inline-block bg-gray-800 px-6 py-2 rounded-full">
-        Redefine Protein Visualization
-      </h1>
-      <p class="mt-4 text-xl md:text-2xl text-gray-300">
-        Experience cinematic, intuitive insights into protein structures.
-      </p>
-      <div class="mt-10">
-        <a href="#viewer-section" class="px-10 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all">
-          Explore Now
-        </a>
+    <!-- Right half: Further split vertically into two equal sections -->
+    <div class="w-1/2 p-4 flex flex-col space-y-4">
+      <!-- Upper right: Protein visualization panel -->
+      <div class="flex-grow bg-gray-900 rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Protein Visualization</h2>
+        <!-- Embed Mol*, pyMol, or other protein visualization tools here -->
+        <div class="w-full h-full flex items-center justify-center border border-dashed border-gray-600 rounded">
+          Visualization Canvas
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Mol* Viewer Section (Placeholder) -->
-  <section id="viewer-section" class="py-20">
-    <div class="container mx-auto px-4">
-      <div class="mb-8 text-center">
-        <h2 class="text-4xl font-semibold inline-block bg-gray-800 px-4 py-2 rounded-full">
-          Interactive Protein Viewer
-        </h2>
-        <p class="mt-2 text-gray-400">A glimpse into the future of protein visualization.</p>
-      </div>
-      <div id="viewer" class="w-full h-96 bg-gray-800 rounded-3xl shadow-lg flex items-center justify-center">
-        <!-- Mol* viewer will be embedded here -->
-        <span class="text-gray-500">Mol* Viewer Placeholder</span>
+      <!-- Lower right: Chatbox for protein discussion -->
+      <div class="flex-grow bg-gray-900 rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Protein Discussion Chat</h2>
+        <!-- Insert chat component elements here -->
+        <div class="w-full h-full flex flex-col">
+          <div class="flex-grow overflow-y-auto">
+            <!-- Chat messages appear here -->
+            <p class="mb-2 text-gray-300">User1: Analysis message here...</p>
+            <p class="mb-2 text-gray-300">User2: Another message...</p>
+          </div>
+          <form class="mt-4">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              class="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </form>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-6">
-    <div class="container mx-auto text-center text-gray-500">
-      © 2025 Sequence Studio. All Rights Reserved.
-    </div>
-  </footer>
+  </div>
 </body>
 </html>
+
