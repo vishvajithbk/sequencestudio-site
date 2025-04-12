@@ -1,189 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protein Engineering IDE</title>
-    <!-- Include Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        dark: {
-                            900: '#000000',
-                            800: '#0A0A0A',
-                            700: '#121212',
-                            600: '#1C1C1C',
-                            500: '#2C2C2C',
-                            400: '#3C3C3C',
-                        },
-                        primary: {
-                            DEFAULT: '#0066CC',
-                            dark: '#0044AA',
-                            light: '#0077EE',
-                        },
-                        success: {
-                            DEFAULT: '#10B981',
-                            dark: '#059669',
-                            light: '#34D399',
-                        }
-                    },
-                    borderRadius: {
-                        '2xl': '1.25rem',
-                    },
-                    boxShadow: {
-                        'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.2)',
-                        'inner-light': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.05)',
-                    },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                        'gradient-subtle': 'linear-gradient(to bottom right, var(--tw-gradient-stops))',
-                    },
-                }
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protein Folding IDE</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Tailwind Config (Optional) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-glass': 'rgba(17, 24, 39, 0.7)',
+          },
+          backdropBlur: {
+            xs: '2px',
+          }
         }
-    </script>
-    
-    <!-- Custom Styles -->
-    <style>
-        /* Custom scrollbar for modern browsers */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 30, 30, 0.5);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(100, 100, 100, 0.5);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(120, 120, 120, 0.5);
-        }
-        
-        /* Glass effect utilities */
-        .glass-effect {
-            backdrop-filter: blur(12px);
-            background: rgba(30, 30, 30, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-    </style>
+      }
+    }
+  </script>
 </head>
-
-<body class="bg-gradient-radial from-dark-800 to-dark-900 text-gray-100 min-h-screen antialiased">
-    <div class="container mx-auto p-4">
-        <!-- Header Section -->
-        <header class="flex justify-between items-center mb-6 px-6 py-4 bg-dark-700 rounded-2xl shadow-premium border border-dark-500">
-            <div>
-                <h1 class="text-2xl font-semibold text-white">Protein Engineering IDE</h1>
-                <p class="text-gray-400 text-sm">Advanced folding and structure analysis</p>
-            </div>
-            <div class="flex space-x-4">
-                <button class="px-4 py-2 bg-gradient-subtle from-primary to-primary-dark text-white rounded-xl hover:from-primary-light hover:to-primary transition shadow-md">
-                    New Project
-                </button>
-                <button class="px-4 py-2 bg-dark-500 text-white rounded-xl hover:bg-dark-400 transition border border-dark-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                </button>
-            </div>
-        </header>
-        
-        <!-- Main Content Area - Three-panel layout -->
-        <div class="flex flex-col lg:flex-row gap-6 h-[calc(100vh-12rem)]">
-            <!-- Left Panel: Tools & Utilities -->
-            <div id="tools-panel" class="w-full lg:w-1/2 bg-dark-700 rounded-2xl shadow-premium border border-dark-500 overflow-hidden flex flex-col">
-                <!-- Panel Header -->
-                <div class="p-4 border-b border-dark-500 flex justify-between items-center">
-                    <h2 class="text-xl font-semibold">Sequence Editor & Tools</h2>
-                    <div class="flex space-x-2">
-                        <button class="p-1.5 rounded-lg hover:bg-dark-500 transition text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7" />
-                            </svg>
-                        </button>
-                        <button class="p-1.5 rounded-lg hover:bg-dark-500 transition text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Panel Content -->
-                <div class="p-4 overflow-auto flex-1">
-                    <!-- Sequence Editor -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2 text-gray-300">Protein Sequence</label>
-                        <div class="relative">
-                            <textarea class="w-full h-40 bg-dark-600 text-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-primary focus:outline-none border border-dark-500 shadow-inner-light font-mono text-sm" placeholder="Enter protein sequence...">MKWVTFISLLFLFSSAYSRGVFRRDAHKSEVAHRFKDLGEENFKALVLIAFAQYLQQCP</textarea>
-                            <div class="absolute bottom-3 right-3 flex space-x-2">
-                                <button class="p-1.5 rounded-lg bg-dark-500 hover:bg-dark-400 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                    </svg>
-                                </button>
-                                <button class="p-1.5 rounded-lg bg-dark-500 hover:bg-dark-400 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Analysis Tools -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-medium mb-3 text-gray-200">Analysis Tools</h3>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button class="p-3 bg-dark-600 rounded-xl hover:bg-dark-500 transition border border-dark-500 shadow-inner-light flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
-                                </svg>
-                                <span>Secondary Structure</span>
-                            </button>
-                            <button class="p-3 bg-dark-600 rounded-xl hover:bg-dark-500 transition border border-dark-500 shadow-inner-light flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                                <span>Hydrophobicity</span>
-                            </button>
-                            <button class="p-3 bg-dark-600 rounded-xl hover:bg-dark-500 transition border border-dark-500 shadow-inner-light flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                </svg>
-                                <span>Binding Sites</span>
-                            </button>
-                            <button class="p-3 bg-dark-600 rounded-xl hover:bg-dark-500 transition border border-dark-500 shadow-inner-light flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-                                </svg>
-                                <span>Mutations</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Simulation Controls -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-medium mb-3 text-gray-200">Simulation Controls</h3>
-                        <div class="space-y-3">
-                            <button class="w-full p-3 bg-gradient-subtle from-primary to-primary-dark text-white rounded-xl hover:from-primary-light hover:to-primary transition shadow-md flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span>Run Folding Simulation</span>
-                            </button>
-                            <button class="w-full p-3 bg-gradient-subtle from-success to-success-dark text-white rounded-xl hover:from-success-light hover:to-success transition shadow-md flex items-center justify-center space-x-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
+<body class="bg-gray-900 text-white h-screen">
+  <!-- Main container -->
+  <div class="h-full flex flex-col md:flex-row">
+    <!-- Left Panel: Utilities/Tools -->
+    <div id="utilities-panel" class="md:w-1/2 p-4">
+      <div class="h-full bg-black/50 backdrop-blur-md rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold mb-4">Utilities &amp; Tools</h2>
+        <p class="text-gray-300 text-sm mb-2">
+          Sequence editor, analysis tools, and more.
+        </p>
+        <!-- Place additional utilities here -->
+        <div class="mt-4">
+          <!-- Modular content container -->
+          <!-- Example: A code editor component -->
+          <div class="bg-gray-800 rounded-md p-4">
+            <p class="text-gray-400">[Sequence Editor Placeholder]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right Panel: Visualization and Chat -->
+    <div id="right-panel" class="md:w-1/2 flex flex-col p-4 space-y-4">
+      <!-- Top Right: Protein Visualization -->
+      <div id="visualization-panel" class="flex-1 bg-black/50 backdrop-blur-md rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold mb-4">Protein Visualization</h2>
+        <!-- Placeholder container for the protein viewer (Mol* / PyMol) -->
+        <div class="w-full h-64 bg-gray-800 rounded-md flex items-center justify-center">
+          <p class="text-gray-400 text-sm">Protein structure visualization area</p>
+        </div>
+      </div>
+      <!-- Bottom Right: Collaborative Chat Interface -->
+      <div id="chat-panel" class="flex-1 bg-black/50 backdrop-blur-md rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold mb-4">Collaborative Chat</h2>
+        <!-- Chat interface placeholder -->
+        <div class="w-full h-64 bg-gray-800 rounded-md flex flex-col">
+          <div class="flex-1 overflow-y-auto p-2">
+            <p class="text-gray-400 text-sm">Chat messages appear here</p>
+          </div>
+          <div class="mt-2">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              class="w-full bg-gray-700 text-white rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 
