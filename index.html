@@ -1,113 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protein Folding IDE</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Optional: Add custom scrollbar styling for a more refined look */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a; /* Darker track */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4a4a4a; /* Gray thumb */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6a6a6a; /* Lighter gray on hover */
-        }
-        /* Ensure body takes full height and has the base styles */
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Apple-like font stack */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protein Folding IDE</title>
+  <style>
+    /* Reset & global settings */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: #1d1d1f; /* Apple's dark aesthetic */
+      color: #ffffff;
+      overflow: hidden;
+      font-size: 16px;
+    }
+    /* Main layout container */
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+    /* Sidebar (file explorer) styling */
+    .sidebar {
+      width: 250px;
+      background-color: #2b2b2d;
+      padding: 20px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    .file-item {
+      padding: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+    .file-item:hover {
+      background-color: #404043;
+    }
+    /* IDE main area */
+    .ide {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-size: 1.5em;
+    }
+    /* Code editor area */
+    .editor {
+      flex: 1;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      overflow: auto;
+      margin-bottom: 10px;
+    }
+    /* Terminal panel */
+    .terminal {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 10px;
+      height: 150px;
+      overflow: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    /* Command input prompt */
+    .prompt {
+      display: flex;
+      align-items: center;
+    }
+    .prompt input {
+      flex: 1;
+      background-color: #1e1e1e;
+      border: none;
+      padding: 10px;
+      color: #ffffff;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+    .prompt input:focus {
+      outline: none;
+    }
+  </style>
 </head>
-<body class="bg-black text-white h-screen overflow-hidden">
-
-    <div class="flex h-full">
-
-        <div class="w-1/2 h-full border-r border-gray-700 flex flex-col p-4 space-y-4 overflow-y-auto">
-            <h2 class="text-xl font-semibold mb-4 text-gray-300">Controls & Data</h2>
-
-            <div class="bg-gray-800 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-medium mb-2 text-gray-400">Project Files</h3>
-                <ul class="list-disc list-inside text-sm space-y-1 text-gray-300">
-                    <li>protein_alpha.pdb</li>
-                    <li>simulation_params.json</li>
-                    <li>results_run_1.log</li>
-                </ul>
-                <button class="mt-3 text-sm bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded-md transition duration-200">Load Data</button>
-            </div>
-
-            <div class="bg-gray-800 p-4 rounded-lg shadow-md">
-                <h3 class="text-lg font-medium mb-2 text-gray-400">Simulation Parameters</h3>
-                <div class="space-y-2 text-sm">
-                    <label class="block text-gray-400">Temperature:</label>
-                    <input type="range" min="273" max="373" value="310" class="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500">
-                     <label class="block text-gray-400 mt-2">Force Field:</label>
-                     <select class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm">
-                         <option>AMBER ff19SB</option>
-                         <option>CHARMM36m</option>
-                         <option>GROMOS 54A7</option>
-                     </select>
-                </div>
-                 <button class="mt-3 text-sm bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded-md transition duration-200">Run Simulation</button>
-            </div>
-
-             <div class="bg-gray-800 p-4 rounded-lg shadow-md flex-grow">
-                <h3 class="text-lg font-medium mb-2 text-gray-400">Analysis Tools</h3>
-                <p class="text-sm text-gray-400">RMSD calculation, Ramachandran plot, etc.</p>
-             </div>
-        </div>
-
-        <div class="w-1/2 h-full flex flex-col">
-
-            <div class="h-1/2 border-b border-gray-700 p-4 flex flex-col">
-                <h2 class="text-xl font-semibold mb-2 text-gray-300 flex-shrink-0">Protein Visualization</h2>
-                <div class="bg-gray-900 rounded-lg flex-grow flex items-center justify-center text-gray-500 border border-gray-700">
-                    <p>Visualization Area (Integrate Mol*, etc. here)</p>
-                    </div>
-            </div>
-
-            <div class="h-1/2 p-4 flex flex-col">
-                <h2 class="text-xl font-semibold mb-2 text-gray-300 flex-shrink-0">Discussion</h2>
-                <div class="flex-grow bg-gray-800 rounded-lg p-3 mb-3 overflow-y-auto space-y-3 border border-gray-700">
-                    <div class="text-sm">
-                        <span class="font-semibold text-blue-400">User A:</span>
-                        <p class="inline ml-1 text-gray-300">Anyone tried folding this sequence with AlphaFold?</p>
-                    </div>
-                     <div class="text-sm">
-                        <span class="font-semibold text-green-400">User B:</span>
-                        <p class="inline ml-1 text-gray-300">Yes, the pLDDT score looks promising in the N-terminal region.</p>
-                    </div>
-                    <div class="text-sm">
-                        <span class="font-semibold text-blue-400">User A:</span>
-                        <p class="inline ml-1 text-gray-300">Interesting, I'm seeing some potential aggregation propensity near residue 150.</p>
-                    </div>
-                     <div class="text-sm">
-                        <span class="font-semibold text-purple-400">System:</span>
-                        <p class="inline ml-1 text-gray-400 italic">Simulation Run 1 completed.</p>
-                    </div>
-                     </div>
-                <div class="flex-shrink-0 flex items-center space-x-2">
-                    <input type="text" placeholder="Type your message..." class="flex-grow p-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm">
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition duration-200 text-sm">
-                        Send
-                    </button>
-                </div>
-            </div>
-
-        </div>
-
+<body>
+  <div class="container">
+    <!-- Sidebar for file navigation -->
+    <div class="sidebar">
+      <h2>Files</h2>
+      <div class="file-item">main.py</div>
+      <div class="file-item">protein_model.py</div>
+      <div class="file-item">analysis.ipynb</div>
+      <div class="file-item">README.md</div>
     </div>
-
+    <!-- IDE main section -->
+    <div class="ide">
+      <div class="header">
+        <h1>Protein Folding IDE</h1>
+      </div>
+      <div class="editor" contenteditable="true">
+        <!-- Code editor area -->
+        // Write your protein folding simulation code here...
+      </div>
+      <div class="terminal">
+        <!-- Terminal output -->
+        Terminal output...
+      </div>
+      <div class="prompt">
+        <input type="text" placeholder="Enter command...">
+      </div>
+    </div>
+  </div>
 </body>
 </html>
