@@ -10,7 +10,7 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease; /* Smooth transition for theme change */
 
     /* Default Light Mode */
-    background-color: #F8F8FF; /* White background */
+    background-color: #FAFAFA; /* White background */
     color: #000000; /* Black text */
 }
 
