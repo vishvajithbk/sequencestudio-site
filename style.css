@@ -36,13 +36,13 @@ body {
     cursor: pointer; /* Indicate it's clickable */
     border: 1px solid #cccccc; /* Light border */
     border-radius: 5px; /* Rounded corners */
-    background-color: #f0f0f0; /* Light grey background */
+    background-color: #0a0a0a; /* Light grey background */
     color: #333333; /* Dark grey text */
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
 }
 
 .mode-button:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
+    background-color: #0a0a0a; /* Slightly darker on hover */
 }
 
 /* --- Dark Mode --- */
