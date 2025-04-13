@@ -1,0 +1,63 @@
+/* Basic Reset and Body Styling */
+body {
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    font-family: sans-serif; /* Basic font */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    transition: background-color 0.4s ease, color 0.4s ease; /* Smooth transition for theme change */
+
+    /* Default Light Mode */
+    background-color: #FFFFFF; /* White background */
+    color: #000000; /* Black text */
+}
+
+/* Content Container Styling */
+.content-container {
+    text-align: center; /* Ensure text inside is centered */
+    /* Adjust padding-bottom slightly to push content 'a little upper' */
+    padding-bottom: 5vh; /* Moves content up slightly from perfect vertical center */
+}
+
+/* Greeting Text Styling */
+#greeting {
+    font-size: 3em; /* Adjust size as needed */
+}
+
+/* Mode Toggle Button Styling */
+.mode-button {
+    position: absolute; /* Position relative to the viewport */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    padding: 10px 18px; /* Button padding */
+    font-size: 1em;
+    cursor: pointer; /* Indicate it's clickable */
+    border: 1px solid #cccccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f0f0f0; /* Light grey background */
+    color: #333333; /* Dark grey text */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+}
+
+.mode-button:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
+}
+
+/* --- Dark Mode --- */
+
+body.dark-mode {
+    background-color: #000000; /* Black background */
+    color: #FFFFFF; /* White text */
+}
+
+body.dark-mode .mode-button {
+    background-color: #333333; /* Darker background for button */
+    color: #FFFFFF; /* White text for button */
+    border-color: #555555; /* Darker border */
+}
+
+body.dark-mode .mode-button:hover {
+    background-color: #444444; /* Slightly lighter dark on hover */
+}
